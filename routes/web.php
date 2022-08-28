@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +19,27 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/plan/create', [
+
+    'uses' => 'PlanController@create',
+
+    'as' => 'plan.create'
+]);
+
+Route::get('/plans', [
+    'uses' => 'PlanController@index',
+
+    'as' => 'plans'
+
+]);
+
+Route::get('/subscribers', [
+    'uses' => 'SubscriberController@index',
+
+    'as' => 'suscribers'
+
+]);
+
 Route::get('/dashboard', 'DashboardController@index');
 // Route::get('/system-management/{option}', 'SystemMgmtController@index');
 Route::get('/profile', 'ProfileController@index');
@@ -31,6 +54,7 @@ Route::resource('system-management/department', 'DepartmentController');
 Route::post('system-management/department/search', 'DepartmentController@search')->name('department.search');
 
 Route::resource('system-management/division', 'DivisionController');
+Route::resource('system-management/division2', 'DivisionController');
 Route::post('system-management/division/search', 'DivisionController@search')->name('division.search');
 
 Route::resource('system-management/country', 'CountryController');
@@ -48,3 +72,37 @@ Route::post('system-management/report/excel', 'ReportController@exportExcel')->n
 Route::post('system-management/report/pdf', 'ReportController@exportPDF')->name('report.pdf');
 
 Route::get('avatars/{name}', 'EmployeeManagementController@load');
+
+Route::get('/request/simulator/{id}', 'SimulationController@simulator');
+
+Route::post('/subscriber/store', [
+
+    'uses' => 'SubscribersController@store',
+
+    'as' => 'subscriber.store'
+]);
+
+Route::post('/department/store', [
+
+    'uses' => 'DepartmentController@store',
+
+    'as' => 'department.store'
+]);
+
+Route::post('/products', 'DepartmentController@store');
+
+Route::get('/pagelink', 'YourController@callMeDirectlyFromUrl');
+
+Route::post('/submit', function (Request $request) {
+
+    $link = tap(new App\Subscriber([
+        'sub_name' => $request->get('sub_name'),
+        'sub_doc_id' => $request->get('sub_doc_id'),
+        'sub_vendor' => $request->get('sub_vendor'),
+        'sub_agent' => $request->get('sub_agent'),
+        'sub_account_type' => $request->get('sub_account_type'),
+        'sub_contract_no' => '1431243131341234123ABC',
+    ]))->save();
+
+    return redirect('/');
+});

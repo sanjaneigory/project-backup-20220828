@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\State;
+use App\Plans;
 use App\Country;
+
 
 class StateController extends Controller
 {
@@ -25,12 +27,18 @@ class StateController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { /**
          $states = DB::table('state')
         ->leftJoin('country', 'state.country_id', '=', 'country.id')
         ->select('state.id', 'state.name', 'country.name as country_name', 'country.id as country_id')
         ->paginate(5);
         return view('system-mgmt/state/index', ['states' => $states]);
+**/
+
+        $plans = DB::table('plans')
+            ->select('plans.id', 'plans.plan_name', 'plans.plan_price', 'plans.plan_deposit', 'plans.plan_cib', 'plans.plan_services', 'plans.plan_type')
+            ->paginate(5);
+        return view('system-mgmt/state/index', ['plans' => $plans]);
     }
 
     /**
@@ -140,15 +148,15 @@ class StateController extends Controller
      */
     public function search(Request $request) {
         $constraints = [
-            'name' => $request['name']
+            'plan_name' => $request['plan_name']
             ];
 
-       $states = $this->doSearchingQuery($constraints);
-       return view('system-mgmt/state/index', ['states' => $states, 'searchingVals' => $constraints]);
+       $plans = $this->doSearchingQuery($constraints);
+       return view('system-mgmt/state/index', ['plans' => $plans, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {
-        $query = State::query();
+        $query = Plans::query();
         $fields = array_keys($constraints);
         $index = 0;
         foreach ($constraints as $constraint) {

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Plans;
+use App\Simulation;
+use App\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Country;
@@ -25,9 +28,20 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countries = Country::paginate(5);
+        $simulations = Simulation::all();
+        $subscribers = Subscriber::all();
+        $plans = Plans::all();
 
-        return view('system-mgmt/country/index', ['countries' => $countries]);
+
+        $simresult = \DB::table('simulations')
+            ->join('subscribers', 'subscribers.sub_id', '=', 'simulations.subscriber_id')
+            ->join('plans', 'plans.id', '=', 'simulations.plan_id')
+            ->get();
+
+
+        //  return view('request.simulation')->with('simresult', $simresult);
+
+        return view('system-mgmt/country/index', ['simresult' => $simresult]);
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Plans;
+use App\Simulation;
+use App\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\City;
@@ -26,11 +29,20 @@ class CityController extends Controller
      */
     public function index()
     {
-         $cities = DB::table('city')
-        ->leftJoin('state', 'city.state_id', '=', 'state.id')
-        ->select('city.id', 'city.name', 'state.name as state_name', 'state.id as state_id')
-        ->paginate(5);
-        return view('system-mgmt/city/index', ['cities' => $cities]);
+        $simulations = Simulation::all();
+        $subscribers = Subscriber::all();
+        $plans = Plans::all();
+
+
+        $simresult = \DB::table('simulations')
+            ->join('subscribers', 'subscribers.sub_id', '=', 'simulations.subscriber_id')
+            ->join('plans', 'plans.id', '=', 'simulations.plan_id')
+            ->get();
+
+
+        //  return view('request.simulation')->with('simresult', $simresult);
+
+        return view('system-mgmt/city/index', ['simresult' => $simresult]);
     }
 
     /**

@@ -57,11 +57,9 @@ class UserManagementController extends Controller
     {
         $this->validateInput($request);
          User::create([
-            'username' => $request['username'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
-            'firstname' => $request['firstname'],
-            'lastname' => $request['lastname']
+            'name' => $request['name'],
         ]);
 
         return redirect()->intended('/user-management');
@@ -106,14 +104,10 @@ class UserManagementController extends Controller
     {
         $user = User::findOrFail($id);
         $constraints = [
-            'username' => 'required|max:20',
-            'firstname'=> 'required|max:60',
-            'lastname' => 'required|max:60'
+            'name' => 'required|max:20',
             ];
         $input = [
-            'username' => $request['username'],
-            'firstname' => $request['firstname'],
-            'lastname' => $request['lastname']
+            'name' => $request['name'],
         ];
         if ($request['password'] != null && strlen($request['password']) > 0) {
             $constraints['password'] = 'required|min:6|confirmed';
@@ -146,10 +140,8 @@ class UserManagementController extends Controller
      */
     public function search(Request $request) {
         $constraints = [
-            'username' => $request['username'],
-            'firstname' => $request['firstname'],
-            'lastname' => $request['lastname'],
-            'department' => $request['department']
+            'name' => $request['name'],
+            'email' => $request['email']
             ];
 
        $users = $this->doSearchingQuery($constraints);
@@ -171,11 +163,9 @@ class UserManagementController extends Controller
     }
     private function validateInput($request) {
         $this->validate($request, [
-        'username' => 'required|max:20',
         'email' => 'required|email|max:255|unique:users',
         'password' => 'required|min:6|confirmed',
-        'firstname' => 'required|max:60',
-        'lastname' => 'required|max:60'
+        'name' => 'required|max:60',
     ]);
     }
 }

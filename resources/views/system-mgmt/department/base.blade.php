@@ -3,12 +3,12 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Department Mangement
-      </h1>
+      <h3>
+              Subscriber Details
+      </h3>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> System Mangement</a></li>
-        <li class="active">Department</li>
+        <li class="active">Subscribers</li>
       </ol>
     </section>
     @yield('action-content')

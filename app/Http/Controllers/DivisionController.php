@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Plans;
+use App\Simulation;
+use App\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Division;
@@ -25,9 +28,42 @@ class DivisionController extends Controller
      */
     public function index()
     {
-        $divisions = Division::paginate(5);
 
-        return view('system-mgmt/division/index', ['divisions' => $divisions]);
+
+        $simulations = Simulation::all();
+        $subscribers = Subscriber::all();
+        $plans = Plans::all();
+
+
+        $simresult = \DB::table('simulations')
+            ->join('subscribers', 'subscribers.sub_id', '=', 'simulations.subscriber_id')
+            ->join('plans', 'plans.id', '=', 'simulations.plan_id')
+            ->get();
+
+
+      //  return view('request.simulation')->with('simresult', $simresult);
+
+        return view('system-mgmt/division/index', ['simresult' => $simresult]);
+    }
+
+    public function index2()
+    {
+
+
+        $simulations = Simulation::all();
+        $subscribers = Subscriber::all();
+        $plans = Plans::all();
+
+
+        $simresult = \DB::table('simulations')
+            ->join('subscribers', 'subscribers.sub_id', '=', 'simulations.subscriber_id')
+            ->join('plans', 'plans.id', '=', 'simulations.plan_id')
+            ->get();
+
+
+        //  return view('request.simulation')->with('simresult', $simresult);
+
+        return view('system-mgmt/division2/approval', ['simresult' => $simresult]);
     }
 
     /**

@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>EM | Empployee Management</title>
+  <title>Risk Management Module</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -60,6 +60,8 @@ desired effect
   <!-- Sidebar -->
   @include('layouts.sidebar')
 
+
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -71,21 +73,69 @@ desired effect
         <!-- li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li-->
         <li class="active">Dashboard</li>
       </ol>
+
+
     </section>
+
+
+
 
     <!-- Main content -->
     <section class="content">
 
       <!-- Your Page Content Here -->
+      You are logged in {{ Auth::user()->name }} !
+      <div>
+        <br><br><img src="vm-15.png" class="img-responsive" alt="">
+      </div>
+
+      @if ($errors->any())
+        <div class="alert alert-danger alert-dismissable margin5">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong>Error:</strong> Please check the form below for errors
+        </div>
+      @endif
+
+      @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissable margin5">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong>Success:</strong> {{ $message }}
+        </div>
+      @endif
+
+      @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-dismissable margin5">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong>Error:</strong> {{ $message }}
+        </div>
+      @endif
+
+      @if ($message = Session::get('warning'))
+        <div class="alert alert-warning alert-dismissable margin5">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong>Warning:</strong> {{ $message }}
+        </div>
+      @endif
+
+      @if ($message = Session::get('info'))
+        <div class="alert alert-info alert-dismissable margin5">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong>Info:</strong> {{ $message }}
+        </div>
+      @endif
 
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
+
+
+
+
   <!-- Footer -->
   @include('layouts.footer')
-  
+
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->

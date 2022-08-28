@@ -7,7 +7,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset("/bower_components/AdminLTE/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image">
+          <img src="{{ asset("/user3.png") }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{ Auth::user()->name}}</p>
@@ -31,24 +31,33 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="/"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
-        <li><a href="{{ url('employee-management') }}"><i class="fa fa-link"></i> <span>Employee Management</span></a></li>
+        <li class="active"><a href="/"><i class="fa fa-home"></i> <span>Home Page</span></a></li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>System Management</span>
+          <a href="#"><i class="fa fa-cog"></i> <span>Simulation Management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('system-management/department') }}">Department</a></li>
-            <li><a href="{{ url('system-management/division') }}">Division</a></li>
-            <li><a href="{{ url('system-management/country') }}">Country</a></li>
-            <li><a href="{{ url('system-management/state') }}">State</a></li>
-            <li><a href="{{ url('system-management/city') }}">City</a></li>
-            <li><a href="{{ url('system-management/report') }}">Report</a></li>
+            <li><a class="fa fa-spinner" href="{{ url('system-management/department') }}"> Client Request</a></li>
+            <li><a class="fa fa-spinner" href="{{ url('system-management/division') }}">  Simulations</a></li>
           </ul>
         </li>
-        <li><a href="{{ route('user-management.index') }}"><i class="fa fa-link"></i> <span>User management</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-bar-chart"></i></i> <span>Analytics</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a class="fa fa-spinner" href="{{ url('system-management/city') }}"> View Anaytics Dashboard</a></li>
+            <li><a class="fa fa-spinner" href="{{ url('system-management/report') }}"> Report</a></li>
+          </ul>
+        </li>
+        <li><a href="{{ url('system-management/city') }}"><i class="fa fa-thumbs-o-up"></i> <span>Approval Center</span></a></li>
+        <li><a href="{{ url('system-management/state') }} "><i class="fa fa-link"></i> <span>Plans</span></a></li>
+        <li><a href="{{ url('system-management/country') }} "><i class="fa fa-plus"></i> <span>Activations</span></a></li>
+        <li><a href="{{ route('user-management.index') }}"><i class="fa fa-users"></i> <span>User Management</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
